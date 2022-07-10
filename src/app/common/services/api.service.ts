@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {TodoInterface} from "../interfaces/todo-interface";
 import {Observable} from "rxjs";
 
@@ -11,7 +11,12 @@ export class ApiService{
   constructor(private  http:HttpClient) {}
 
   getAllTodos():Observable<TodoInterface[]>{
-    return this.http.get<TodoInterface[]>(this.apiUrl)
+    return this.http.get<TodoInterface[]>(this.apiUrl);
+  }
+  getTodosByUserId(id:number):Observable<TodoInterface[]>{
+    const params=new HttpParams()
+      .set('userId',id);
+    return this.http.get<TodoInterface[]>(this.apiUrl, {params});
   }
 
 }

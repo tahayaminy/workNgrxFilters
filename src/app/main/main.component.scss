@@ -1,0 +1,25 @@
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: var(--white-0);
+  border-radius: 0 8px 8px 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--gray);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--black);
+}
+.selected{
+  background-color: var(--gray);
+  color:var(--white-0)
+}
