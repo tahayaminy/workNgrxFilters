@@ -21,4 +21,9 @@ export class MainComponent implements OnInit {
     })
   }
 
+  public getTodosWithId($event: number) {
+    this.api.getTodosByUserId($event).subscribe(data=>{
+      this.todos=data;
+    })
+  }
 }

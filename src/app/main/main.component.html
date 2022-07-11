@@ -29,7 +29,7 @@
         </section>
         <section tabindex="0"
                  class="col-span-1 h-fit hover:bg-opacity-10 transition duration-300 ease-in-out focus-within:bg-opacity-10 bg-opacity-5 bg-white-0 p-4 rounded-lg">
-          <app-filter></app-filter>
+          <app-filter (applyFilter)="getTodosWithId($event)"></app-filter>
         </section>
     </section>
   </section>
