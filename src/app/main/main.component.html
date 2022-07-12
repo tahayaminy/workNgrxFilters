@@ -2,7 +2,7 @@
   <section class="p-6 mx-auto container">
     <section class="bg-white-0 text-black rounded-lg overflow-y-auto p-3" style="height: 45vh;">
       <div [ngClass]="selectedId===todo.id ? 'selected shadow-gray': ''"
-           (click)="selectedId===todo.id ? selectedId=undefined:selectedId=todo.id"
+           (click)="selectTodo(todo.id)"
            [class.mb-6]="!last" class="bg-white-1 transition duration-500 ease-in-out shadow-md cursor-pointer rounded-md px-4 py-2"
            *ngFor="let todo of todos;let last=last">
         <h3 style="margin-bottom: 0 !important;">
@@ -21,15 +21,14 @@
     <section class="grid grid-cols-2 mt-5 gap-x-5" style="height: 40vh;">
         <section tabindex="0"
                  class="col-span-1 overflow-y-auto hover:bg-opacity-10 transition duration-300 ease-in-out focus-within:bg-opacity-10 bg-opacity-5 bg-white-0 p-4 rounded-lg">
-<!--          <div class="flex h-full items-center justify-evenly">-->
-<!--            <button mat-fab color="primary" ><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button>-->
-<!--            <button mat-fab color="accent" ><mat-icon aria-hidden="false" aria-label="Example home icon">add_circle</mat-icon></button>-->
-<!--          </div>-->
-          <app-edit></app-edit>
+          <div *ngIf="!open" class="flex h-full items-center justify-center">
+            <button mat-fab (click)="open=true" color="accent" ><mat-icon aria-hidden="false" aria-label="Example home icon">add_circle</mat-icon></button>
+          </div>
+          <app-edit [detail]="todoDetail" [createMode]="mode" (oncancel)="open=$event;this.selectedId=undefined" *ngIf="open"></app-edit>
         </section>
         <section tabindex="0"
                  class="col-span-1 h-fit hover:bg-opacity-10 transition duration-300 ease-in-out focus-within:bg-opacity-10 bg-opacity-5 bg-white-0 p-4 rounded-lg">
-          <app-filter (applyFilter)="getTodosWithId($event)"></app-filter>
+          <app-filter (clearFilter)="getTodos()" (applyFilter)="getTodosWithId($event)"></app-filter>
         </section>
     </section>
   </section>

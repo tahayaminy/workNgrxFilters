@@ -10,12 +10,19 @@ import {TodoInterface} from "../common/interfaces/todo-interface";
 export class MainComponent implements OnInit {
 
   public selectedId: number | undefined;
-  public todos: TodoInterface[]=[];
+  public todos: TodoInterface[];
+  public todoDetail:TodoInterface;
+  public open=false;
+  public mode: boolean;
 
   constructor(private api: ApiService) {
   }
 
   ngOnInit(): void {
+    this.getTodos();
+  }
+
+  public getTodos(){
     this.api.getAllTodos().subscribe((data) => {
       this.todos=data;
     })
@@ -25,5 +32,17 @@ export class MainComponent implements OnInit {
     this.api.getTodosByUserId($event).subscribe(data=>{
       this.todos=data;
     })
+  }
+
+  public selectTodo(id:number) {
+    if(this.selectedId===id){
+      this.selectedId=undefined;
+      this.mode=true;
+    }else{
+      this.selectedId=id;
+      this.todoDetail=this.todos[id];
+      this.mode=false;
+      this.open=true;
+    }
   }
 }

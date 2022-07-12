@@ -10,6 +10,8 @@ export class FilterComponent implements OnInit {
 
   @Output()
   applyFilter= new EventEmitter();
+  @Output()
+  clearFilter= new EventEmitter();
 
   constructor() { }
 
@@ -20,5 +22,9 @@ export class FilterComponent implements OnInit {
     if(this.filter){
       this.applyFilter.emit(this.filter);
     }
+  }
+
+  public clear() {
+    this.clearFilter.emit();
   }
 }

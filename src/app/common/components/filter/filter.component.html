@@ -3,7 +3,10 @@
     <mat-label>User ID</mat-label>
     <input [(ngModel)]="filter" name="filter" type="number" style="color:var(--blue)" min="1" matInput placeholder="Ex. 1">
   </mat-form-field>
-  <div>
+  <div class="flex">
     <button (click)="filterFunction()" mat-raised-button class="w-fit" color="primary">Filter</button>
+    <span class="ml-auto">
+      <button (click)="clear()" mat-raised-button class="w-fit" color="basic">Cancel</button>
+    </span>
   </div>
 </form>
