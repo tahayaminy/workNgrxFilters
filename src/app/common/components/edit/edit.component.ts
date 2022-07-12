@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {TodoInterface} from "../../interfaces/todo-interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ApiService} from "../../services/api.service";
 
 @Component({
   selector: 'app-edit',
@@ -10,12 +11,12 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class EditComponent implements OnInit,OnChanges {
 
   @Input() detail:TodoInterface | null;
-  @Input() createMode: boolean=true;
+  @Input() createMode: boolean;
   @Output() oncancel=new EventEmitter();
 
   public form:FormGroup;
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder,private api:ApiService) { }
 
   ngOnChanges() {
     this.createForm();
@@ -33,9 +34,21 @@ export class EditComponent implements OnInit,OnChanges {
       this.form.reset();
     }
   }
+  public editTodo(){
+    this.api.editTodo({userId:this.form.get('userId')?.value,title:this.form.get('title')?.value},this.detail!.id!);
+    this.form.reset()
+  }
 
   public cancellation(){
     this.oncancel.emit(false)
   }
 
+  public deleteTodo() {
+    this.api.deleteTodo(this.detail!.id!);
+  }
+
+  public postTodo() {
+    this.api.postTodo({userId:this.form.get('userId')?.value,title:this.form.get('title')?.value});
+    this.form.reset();
+  }
 }

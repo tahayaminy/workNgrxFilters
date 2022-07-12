@@ -9,10 +9,10 @@
   </mat-form-field>
   <div *ngIf="!createMode">
     <div class="mb-5">
-      <button mat-raised-button class="w-full" color="accent">Edit this ToDo</button>
+      <button [disabled]="form.invalid" (click)="editTodo()" mat-raised-button class="w-full" color="accent">Edit this ToDo</button>
     </div>
     <div class="mb-5">
-      <button mat-raised-button class="w-full" color="warn">Delete this ToDo</button>
+      <button (click)="deleteTodo()" mat-raised-button class="w-full" color="warn">Delete this ToDo</button>
     </div>
     <div>
       <button (click)="cancellation()" mat-raised-button class="w-full" color="basic">Cancel</button>
@@ -20,7 +20,7 @@
   </div>
   <div *ngIf="createMode">
     <div class="mb-5">
-      <button mat-raised-button class="w-full" color="accent">Create this ToDo</button>
+      <button (click)="postTodo()" [disabled]="form.invalid" mat-raised-button class="w-full" color="accent">Create this ToDo</button>
     </div>
     <div>
       <button (click)="cancellation()" mat-raised-button class="w-full" color="warn">Cancel</button>

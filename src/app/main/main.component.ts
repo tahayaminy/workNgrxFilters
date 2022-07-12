@@ -20,6 +20,15 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTodos();
+    this.api.updateRefresh.subscribe(data=>{
+      this.refresh(data as TodoInterface);
+    });
+    this.api.deleteRefresh.subscribe(data=>{
+      this.delete(data as number);
+    })
+    this.api.postRefresh.subscribe(data=>{
+      this.post(data as TodoInterface);
+    })
   }
 
   public getTodos(){
@@ -34,15 +43,27 @@ export class MainComponent implements OnInit {
     })
   }
 
-  public selectTodo(id:number) {
+  public selectTodo(id:number|undefined) {
     if(this.selectedId===id){
       this.selectedId=undefined;
       this.mode=true;
     }else{
       this.selectedId=id;
-      this.todoDetail=this.todos[id];
+      this.todoDetail=this.todos[id! - 1];
       this.mode=false;
       this.open=true;
     }
+  }
+
+  public refresh(data:TodoInterface) {
+    this.todos[data!.id! - 1]=data;
+  }
+  public delete(data:number) {
+    this.todos.splice(data -1,1);
+    this.selectTodo(undefined);
+    this.open=false;
+  }
+  public post(data:TodoInterface){
+    this.todos.push(Object.assign(data,{id:this.todos.length+1}));
   }
 }
