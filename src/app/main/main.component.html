@@ -3,7 +3,7 @@
     <section class="bg-white-0 text-black rounded-lg overflow-y-auto p-3" style="height: 45vh;">
       <div [ngClass]="selectedId===todo.id ? 'selected shadow-gray': ''"
            [class.mb-6]="!last" class="bg-white-1 flex items-center transition duration-500 ease-in-out shadow-md cursor-pointer rounded-md px-4 py-2"
-           *ngFor="let todo of todos;let last=last">
+           *ngFor="let todo of todos;let id=index;let last=last">
         <div class="basis-11/12" (click)="selectTodo(todo.id)">
           <h3 style="margin-bottom: 0 !important;">
             <span class="font-medium">Title</span>: {{todo.title}}
@@ -19,7 +19,7 @@
         </div>
         <div>
           <span class="bg-gray p-2 rounded-full">
-            <mat-checkbox (change)="checkbox(todo.id!)" class="-translate-y-0.5" [checked]="todo.completed"></mat-checkbox>
+            <mat-checkbox (change)="checkbox(id)" class="-translate-y-0.5" [checked]="todo.completed"></mat-checkbox>
           </span>
         </div>
       </div>

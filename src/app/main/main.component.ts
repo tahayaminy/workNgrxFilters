@@ -15,6 +15,7 @@ export class MainComponent implements OnInit {
   public todoDetail:TodoInterface;
   public open=false;
   public mode: boolean;
+  public selectedIndex:number | undefined;
 
   constructor(private api: ApiService) {
   }
@@ -24,8 +25,8 @@ export class MainComponent implements OnInit {
     this.api.updateRefresh.subscribe(data=>{
       this.refresh(data as TodoInterface);
     });
-    this.api.deleteRefresh.subscribe(data=>{
-      this.delete(data as number);
+    this.api.deleteRefresh.subscribe(()=>{
+      this.delete();
     })
     this.api.postRefresh.subscribe(data=>{
       this.post(data as TodoInterface);
@@ -60,19 +61,25 @@ export class MainComponent implements OnInit {
     if(this.selectedId===id){
       this.selectedId=undefined;
       this.mode=true;
+      this.todos.map((todo,index)=>{
+        if(todo.id===this.selectedId){
+          this.selectedIndex=index;
+        }
+      })
     }else{
       this.selectedId=id;
       this.todoDetail=this.todos[id! - 1];
       this.mode=false;
       this.open=true;
+      this.selectedIndex=undefined;
     }
   }
 
   public refresh(data:TodoInterface) {
     this.todos[data!.id! - 1]=data;
   }
-  public delete(data:number) {
-    this.todos.splice(data -1,1);
+  public delete() {
+    this.todos.splice(this.selectedIndex!,1);
     this.selectTodo(undefined);
     this.open=false;
   }
@@ -81,6 +88,8 @@ export class MainComponent implements OnInit {
   }
 
   public checkbox(id: number) {
-    this.todos[id-1].completed=!this.todos[id-1].completed;
+    console.log(this.todos[id])
+    this.todos[id].completed=!this.todos[id].completed;
+    console.log(this.todos[id])
   }
 }
