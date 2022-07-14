@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../common/services/api.service";
 import {TodoInterface} from "../common/interfaces/todo-interface";
+import {map} from "rxjs";
 
 @Component({
   selector: 'app-main',
@@ -38,9 +39,21 @@ export class MainComponent implements OnInit {
   }
 
   public getTodosWithId($event: number) {
-    this.api.getTodosByUserId($event).subscribe(data=>{
-      this.todos=data;
+    let filteredTodos:TodoInterface[]=[];
+    this.api.getAllTodos().pipe(map((todos:TodoInterface[])=>todos.map(todo=>{
+      if(todo.userId===$event){
+          filteredTodos.push(todo);
+        }
+    }))).subscribe(()=>{
+      this.todos=filteredTodos;
     })
+    // let filteredTodo:TodoInterface[]=[];
+    // this.todos.map(todo=>{
+    //   if(todo.userId===$event){
+    //     filteredTodo.push(todo);
+    //   }
+    // })
+    // this.todos=filteredTodo;
   }
 
   public selectTodo(id:number|undefined) {
@@ -65,5 +78,9 @@ export class MainComponent implements OnInit {
   }
   public post(data:TodoInterface){
     this.todos.push(Object.assign(data,{id:this.todos.length+1}));
+  }
+
+  public checkbox(id: number) {
+    this.todos[id-1].completed=!this.todos[id-1].completed;
   }
 }

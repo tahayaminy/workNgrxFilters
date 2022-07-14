@@ -2,20 +2,26 @@
   <section class="p-6 mx-auto container">
     <section class="bg-white-0 text-black rounded-lg overflow-y-auto p-3" style="height: 45vh;">
       <div [ngClass]="selectedId===todo.id ? 'selected shadow-gray': ''"
-           (click)="selectTodo(todo.id)"
-           [class.mb-6]="!last" class="bg-white-1 transition duration-500 ease-in-out shadow-md cursor-pointer rounded-md px-4 py-2"
+           [class.mb-6]="!last" class="bg-white-1 flex items-center transition duration-500 ease-in-out shadow-md cursor-pointer rounded-md px-4 py-2"
            *ngFor="let todo of todos;let last=last">
-        <h3 style="margin-bottom: 0 !important;">
-          <span class="font-medium">Title</span>: {{todo.title}}
-        </h3>
-        <h5 style="margin-bottom: 0 !important;"
-            [ngClass]="selectedId===todo.id ? 'text-white-1': 'text-gray'">
-          <span class="font-medium">ID</span>: {{todo.id}}
-        </h5>
-        <h5 style="margin-bottom: 0 !important;"
-            [ngClass]="selectedId===todo.id ? 'text-white-1': 'text-gray'">
-          <span class="font-medium">User ID</span>: {{todo.userId}}
-        </h5>
+        <div class="basis-11/12" (click)="selectTodo(todo.id)">
+          <h3 style="margin-bottom: 0 !important;">
+            <span class="font-medium">Title</span>: {{todo.title}}
+          </h3>
+          <h5 style="margin-bottom: 0 !important;"
+              [ngClass]="selectedId===todo.id ? 'text-white-1': 'text-gray'">
+            <span class="font-medium">ID</span>: {{todo.id}}
+          </h5>
+          <h5 style="margin-bottom: 0 !important;"
+              [ngClass]="selectedId===todo.id ? 'text-white-1': 'text-gray'">
+            <span class="font-medium">User ID</span>: {{todo.userId}}
+          </h5>
+        </div>
+        <div>
+          <span class="bg-gray p-2 rounded-full">
+            <mat-checkbox (change)="checkbox(todo.id!)" class="-translate-y-0.5" [checked]="todo.completed"></mat-checkbox>
+          </span>
+        </div>
       </div>
     </section>
     <section class="grid grid-cols-2 mt-5 gap-x-5" style="height: 40vh;">

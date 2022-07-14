@@ -5,6 +5,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from "@angular/material/button";
 import {SharedModule} from "../common/shared.module";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 const routes: Routes=[
   {path:'',component:MainComponent}
 ]
@@ -13,12 +14,13 @@ const routes: Routes=[
   declarations: [
     MainComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MatIconModule,
-    RouterModule.forChild(routes),
-    MatButtonModule
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        MatIconModule,
+        RouterModule.forChild(routes),
+        MatButtonModule,
+        MatCheckboxModule
+    ]
 })
 export class MainModule { }
